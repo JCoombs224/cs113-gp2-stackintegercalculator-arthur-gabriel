@@ -1,8 +1,7 @@
 package models;
 
 
-import java.util.EmptyStackException;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * CalculatorModel.java : Concrete class using the stack data structure to evaluate infix math expressions.
@@ -28,13 +27,63 @@ public class CalculatorModel implements CalculatorInterface {
 
 
     @Override
-    public String evaluate(String expression){
-        String[] tokens = expression.split("\\s+");
+    public String evaluate(String expression)
+    {
+        //stack of operations and stack of integers.
+        Queue<String> queueOfOpperations = new LinkedList<>();
+        Queue<Integer> queueOfIntegers = new LinkedList<>();
+
+        int answer = 0;
+        StringTokenizer calculation = new StringTokenizer(expression, " ");
+
+        //separate operations and numbers into queues.
+        while (calculation.hasMoreTokens())
+        {
+            String nextToken = calculation.nextToken();
+            nextToken = nextToken.trim();
+            char firstChar = nextToken.charAt(0);
+
+            if(Character.isDigit(firstChar))
+            {
+                queueOfIntegers.add(Integer.parseInt(nextToken));
+            }
+            else if(isOperator(firstChar))
+            {
+                queueOfOpperations.add(nextToken);
+            }
+        }
         try
         {
-            for(String nextToken: tokens)
+            //while neither are empty.
+            boolean firstNumberAdded = false;
+            boolean secondNumberAdded = false;
+            while ((!queueOfOpperations.isEmpty()) )
             {
-                char firstChar = nextToken.charAt(0);
+                String nextToken = "";
+                char firstChar = '1';
+                //if we have not added a first number.
+                if(!firstNumberAdded)
+                {
+                    nextToken = queueOfIntegers.poll().toString();
+                    nextToken = nextToken.trim();
+                    firstChar = nextToken.charAt(0);
+                    firstNumberAdded = true;
+                }
+                //if we have not added a first number.
+                else if(!secondNumberAdded)
+                {
+                    nextToken = queueOfIntegers.poll().toString();
+                    nextToken = nextToken.trim();
+                    firstChar = nextToken.charAt(0);
+                    secondNumberAdded = true;
+                }
+                //lastly, poll the operations.
+                else if(firstNumberAdded && secondNumberAdded)
+                {
+                    nextToken = queueOfOpperations.poll();
+                    nextToken = nextToken.trim();
+                    firstChar = nextToken.charAt(0);
+                }
 
                 if(Character.isDigit(firstChar))
                 {
@@ -48,26 +97,31 @@ public class CalculatorModel implements CalculatorInterface {
                 }
                 else
                 {
-                    throw new SyntaxErrorException("hello");
+                    throw new SyntaxErrorException("Please enter an allowable character");
                 }
             }
-            int answer = list.pop();
+
+            answer = list.pop();
             if(list.empty())
             {
                 return String.valueOf(answer);
             }
             else
             {
-                throw new SyntaxErrorException("hello");
+                throw new SyntaxErrorException("Stack is not empty, did not process all characters");
             }
         }
         catch(EmptyStackException e)
         {
-            throw new SyntaxErrorException("hello");
+            System.out.println("Stack is empty");
+        }
+        catch (SyntaxErrorException e)
+        {
+            System.out.println("Syntax error");
         }
 
 
-        return "NaN";
+        return String.valueOf(answer);
     }
     public boolean isOperator(char c)
     {

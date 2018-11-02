@@ -6,7 +6,7 @@ package models;
  * @author Nery Chapeton-Lamas
  * @version 1.0
  */
-public interface CalculatorInterface {
+public interface CalculatorInterface{
 
     /**
      * Takes an infix expression and, enforcing operator precedence, evaluates it using the stack data structure.

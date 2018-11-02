@@ -51,9 +51,9 @@ You have been given a View and Controller for a basic integer calculator, **you 
 - [ ] Complete following statement in space below:
 >The Stack implementation we will be using is [***type which data structure you'll use in this adaptor pattern***] because [ ***type your reasoning here in 2-3 sentences, making sure to justify the way we have in class (run-time efficiency, memory-space efficiency, etc.)*** ].
 
-## Sprint 1 (???)
+## Sprint 1 (Calculator Foundation, add using PEMDAS)
 **User Story**:
->As a ***???*** I want to ***???*** so that ***???***.
+>As a ***programmer using the calculator program*** I want to ***add, subtract, multiply, and divide numbers correctly using PEMDAS (Parentheses, Exponents, Multiplication, Add, Subtract)*** so that ***the numbers will be evaluated correctly and outputted to the user***.
 
 **Definition Of Done**:
 - [ ] General requirements 
@@ -62,6 +62,13 @@ You have been given a View and Controller for a basic integer calculator, **you 
 	- *Code checked into GitHub*
 	- *Unit tests were written, all pass*
 	- *Relevant diagrams and documentation updated and accurate (UML class/sequence diagrams, etc.)*
+- [ ] Create code that would allow the following
+    - [ ] Add positive numbers
+    - [ ] Subtract positive numbers
+    - [ ] Multiply positive numbers
+    - [ ] Divide positive numbers
+- [ ] Corporate PEMDAS so that the program calculates the values correctly
+- [ ] Create JUnit tests for the above code make sure the following tests work correctly
 - [ ] Product owner agrees
 
 ## Sprint 2 (???)

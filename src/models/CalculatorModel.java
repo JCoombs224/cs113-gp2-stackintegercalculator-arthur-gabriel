@@ -30,7 +30,7 @@ public class CalculatorModel implements CalculatorInterface {
     public String evaluate(String expression)
     {
         //stack of operations and stack of integers.
-        Queue<String> queueOfOpperations = new LinkedList<>();
+        Queue<String> queueOfOperations = new LinkedList<>();
         Queue<Integer> queueOfIntegers = new LinkedList<>();
 
         int answer = 0;
@@ -49,7 +49,27 @@ public class CalculatorModel implements CalculatorInterface {
             }
             else if(isOperator(firstChar))
             {
-                queueOfOpperations.add(nextToken);
+                queueOfOperations.add(nextToken);
+            }
+            //Put () at the front of the queue.
+            else if(firstChar == '(')
+            {
+                String nextPriorityToken = calculation.nextToken();
+                while ( !nextPriorityToken.equals(")") )
+                {
+                    nextPriorityToken = nextPriorityToken.trim();
+                    firstChar = nextPriorityToken.charAt(0);
+
+                    if(Character.isDigit(firstChar))
+                    {
+                        ((LinkedList<Integer>) queueOfIntegers).add(0,Integer.parseInt(nextPriorityToken) );
+                    }
+                    else if(isOperator(firstChar))
+                    {
+                        ((LinkedList<String>) queueOfOperations).add(0, nextPriorityToken);
+                    }
+                    nextPriorityToken = calculation.nextToken();
+                }
             }
         }
         try
@@ -57,7 +77,7 @@ public class CalculatorModel implements CalculatorInterface {
             //while neither are empty.
             boolean firstNumberAdded = false;
             boolean secondNumberAdded = false;
-            while ((!queueOfOpperations.isEmpty()) )
+            while ((!queueOfOperations.isEmpty()) )
             {
                 String nextToken = "";
                 char firstChar = '1';
@@ -72,17 +92,31 @@ public class CalculatorModel implements CalculatorInterface {
                 //if we have not added a first number.
                 else if(!secondNumberAdded)
                 {
-                    nextToken = queueOfIntegers.poll().toString();
-                    nextToken = nextToken.trim();
-                    firstChar = nextToken.charAt(0);
-                    secondNumberAdded = true;
+                    //if a second number does not exist.
+                    if(queueOfIntegers.isEmpty())
+                    {
+                        nextToken = queueOfOperations.poll();
+                        nextToken = nextToken.trim();
+                        firstChar = nextToken.charAt(0);
+                        firstNumberAdded = false;
+                        secondNumberAdded = false;
+                    }
+                    else
+                     {
+                        nextToken = queueOfIntegers.poll().toString();
+                        nextToken = nextToken.trim();
+                        firstChar = nextToken.charAt(0);
+                        secondNumberAdded = true;
+                     }
                 }
                 //lastly, poll the operations.
                 else if(firstNumberAdded && secondNumberAdded)
                 {
-                    nextToken = queueOfOpperations.poll();
+                    nextToken = queueOfOperations.poll();
                     nextToken = nextToken.trim();
                     firstChar = nextToken.charAt(0);
+                    firstNumberAdded = false;
+                    secondNumberAdded = false;
                 }
 
                 if(Character.isDigit(firstChar))

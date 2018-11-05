@@ -30,13 +30,13 @@ public class CalculatorModel implements CalculatorInterface {
     public String evaluate(String expression)
     {
         StringTokenizer calculation = new StringTokenizer(expression, " ");
-        
 
 
 
 
 
 
+        //Proof of concept.
         int answer = helperArithmetic(expression);
 
         return String.valueOf(answer);

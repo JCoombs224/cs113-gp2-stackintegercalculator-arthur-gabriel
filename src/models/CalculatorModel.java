@@ -31,6 +31,78 @@ public class CalculatorModel implements CalculatorInterface {
     {
         StringTokenizer calculation = new StringTokenizer(expression, " ");
 
+        /*
+        String number1,number2 = "";
+        String operator = "";
+        String withParent = "";
+        int totalNumber = 0;
+        while(g.charAt(i) != ')')
+        {
+            withParent += g.charAt(i);
+        }
+        withParent.replaceAll(" ", "");
+        if(withParent.length() > 2)
+        {
+            for(int i = 0; i < withParent.length();i++)
+            {
+                if(Character.isDigit(withParent.charAt(i)) && operator.equals(""))
+                {
+                    number1 += withParent.charAt(i);
+                }
+                if(Character.isDigit(withParent.charAt(i)) && !operator.equals(""))
+                {
+                    number2 += withParent.charAt(i);
+                }
+                else if(!Character.isDigit(withParent.charAt(i)))
+                {
+                    if(!operator.equals(""))
+                    {
+                        if(operator.equals("+"))
+                        {
+                            totalNumber = Integer.parseInt(number1) + Integer.parseInt(number2);
+                        }
+                        else if(operator.equals("-"))
+                        {
+                            totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
+                        }
+                        else if(operator.equals("*"))
+                        {
+                            totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
+                        }
+                        else if(operator.equals("/"))
+                        {
+                            totalNumber = Integer.parseInt(number1) / Integer.parseInt(number2);
+                        }
+
+                        number1 = String.valueOf(totalNumber);
+                        number2 = "";
+                    }
+
+                    operator = "";
+                    operator += withParent.charAt(i);
+                }
+                if(i+1 == withParent.length() && !number2.equals("") && !operator.equals(""))
+                {
+                    if(operator.equals("+"))
+                    {
+                        totalNumber = Integer.parseInt(number1) + Integer.parseInt(number2);
+                    }
+                    else if(operator.equals("-"))
+                    {
+                        totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
+                    }
+                    else if(operator.equals("*"))
+                    {
+                        totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
+                    }
+                    else if(operator.equals("/"))
+                    {
+                        totalNumber = Integer.parseInt(number1) / Integer.parseInt(number2);
+                    }
+                }
+
+            }
+        }*/
 
 
 

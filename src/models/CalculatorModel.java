@@ -29,6 +29,25 @@ public class CalculatorModel implements CalculatorInterface {
     @Override
     public String evaluate(String expression)
     {
+        StringTokenizer calculation = new StringTokenizer(expression, " ");
+        
+
+
+
+
+
+
+        int answer = helperArithmetic(expression);
+
+        return String.valueOf(answer);
+    }
+    public boolean isOperator(char c)
+    {
+        return OPERATORS.indexOf(c) != -1;
+    }
+
+    private int helperArithmetic(String expression)
+    {
         //stack of operations and stack of integers.
         Queue<String> queueOfOperations = new LinkedList<>();
         Queue<Integer> queueOfIntegers = new LinkedList<>();
@@ -51,80 +70,39 @@ public class CalculatorModel implements CalculatorInterface {
             {
                 queueOfOperations.add(nextToken);
             }
-            //Put () at the front of the queue.
-            else if(firstChar == '(')
-            {
-                String nextPriorityToken = calculation.nextToken();
-                while ( !nextPriorityToken.equals(")") )
-                {
-                    nextPriorityToken = nextPriorityToken.trim();
-                    firstChar = nextPriorityToken.charAt(0);
-
-                    if(Character.isDigit(firstChar))
-                    {
-                        ((LinkedList<Integer>) queueOfIntegers).add(0,Integer.parseInt(nextPriorityToken) );
-                    }
-                    else if(isOperator(firstChar))
-                    {
-                        ((LinkedList<String>) queueOfOperations).add(0, nextPriorityToken);
-                    }
-                    nextPriorityToken = calculation.nextToken();
-                }
-            }
         }
         try
         {
             //while neither are empty.
             boolean firstNumberAdded = false;
             boolean secondNumberAdded = false;
+
+            //add first number to the stack.
+            String nextTokenTmp = queueOfIntegers.poll().toString();
+            nextTokenTmp = nextTokenTmp.trim();
+            list.push(Integer.parseInt(nextTokenTmp));
+
             while ((!queueOfOperations.isEmpty()) )
             {
                 String nextToken = "";
                 char firstChar = '1';
                 //if we have not added a first number.
-                if(!firstNumberAdded)
+                if(!queueOfIntegers.isEmpty())
                 {
                     nextToken = queueOfIntegers.poll().toString();
                     nextToken = nextToken.trim();
                     firstChar = nextToken.charAt(0);
-                    firstNumberAdded = true;
-                }
-                //if we have not added a first number.
-                else if(!secondNumberAdded)
-                {
-                    //if a second number does not exist.
-                    if(queueOfIntegers.isEmpty())
-                    {
-                        nextToken = queueOfOperations.poll();
-                        nextToken = nextToken.trim();
-                        firstChar = nextToken.charAt(0);
-                        firstNumberAdded = false;
-                        secondNumberAdded = false;
-                    }
-                    else
-                     {
-                        nextToken = queueOfIntegers.poll().toString();
-                        nextToken = nextToken.trim();
-                        firstChar = nextToken.charAt(0);
-                        secondNumberAdded = true;
-                     }
-                }
-                //lastly, poll the operations.
-                else if(firstNumberAdded && secondNumberAdded)
-                {
-                    nextToken = queueOfOperations.poll();
-                    nextToken = nextToken.trim();
-                    firstChar = nextToken.charAt(0);
-                    firstNumberAdded = false;
-                    secondNumberAdded = false;
-                }
-
-                if(Character.isDigit(firstChar))
-                {
+                    //add digit to the stack.
                     int value = Integer.parseInt(nextToken);
                     list.push(value);
                 }
-                else if(isOperator(firstChar))
+                //lastly, poll the operations.
+                nextToken = queueOfOperations.poll();
+                nextToken = nextToken.trim();
+                firstChar = nextToken.charAt(0);
+
+                //if a command, calculate.
+                if(isOperator(firstChar))
                 {
                     int result = evalOP(firstChar);
                     list.push(result);
@@ -138,7 +116,7 @@ public class CalculatorModel implements CalculatorInterface {
             answer = list.pop();
             if(list.empty())
             {
-                return String.valueOf(answer);
+                return answer;
             }
             else
             {
@@ -154,12 +132,7 @@ public class CalculatorModel implements CalculatorInterface {
             System.out.println("Syntax error");
         }
 
-
-        return String.valueOf(answer);
-    }
-    public boolean isOperator(char c)
-    {
-        return OPERATORS.indexOf(c) != -1;
+        return answer;
     }
     private int evalOP(char op)
     {

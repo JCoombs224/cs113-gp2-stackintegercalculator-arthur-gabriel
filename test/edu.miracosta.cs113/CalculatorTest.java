@@ -25,12 +25,12 @@ public class CalculatorTest
     private static final String BIG_MULTIPLICATION = "80 * 6";
     private static final String BIG_DIVISION = "81 / 9";
 
-    /*
-    private static final String NEGATIVE_ADDITION = "5 + 10";
-    private static final String NEGATIVE_SUBTRACTION = "13 - 8";
-    private static final String NEGATIVE_MULTIPLICATION = "4 * 4";
-    private static final String NEGATIVE_DIVISION = "6 / 3";
-    */
+
+    private static final String DERIVATIVE_POSITIVE = "3x^10+4x^7+5x^4+3";
+    private static final String DERIVATIVE_NEGATIVE = "6x^-12+5x^-3";
+    private static final String DERIVATIVE_POSITIVE_NEGATIVE = "2x^12+5x^3-3x^-2-4x^-4";
+    private static final String DERIVATIVE_ZERO = "6x^4+5";
+
 
     /**
      * Tests basic addition within the calculator
@@ -112,4 +112,44 @@ public class CalculatorTest
 
         assertEquals("9", test.evaluate(BIG_DIVISION));
     }
+
+    /**
+     * Tests derivative of an equation that has positive numbers
+     */
+    @Test
+    public void testDerivativePositive()
+    {
+        CalculatorModel test = new CalculatorModel();
+
+        assertEquals("+30x^9+28x^6+20x^3", test.derivative(DERIVATIVE_POSITIVE));
+    }
+    /**
+     * Tests derivative of an equation that has negative numbers
+     */
+    @Test
+    public void testDerivativeNegative()
+    {
+        CalculatorModel test = new CalculatorModel();
+
+        assertEquals("-72x^-13-15x^-4", test.derivative(DERIVATIVE_NEGATIVE));
+    }
+    /**
+     * Tests derivative of an equation that has positive and negative numbers
+     */
+    @Test
+    public void testDerivativePositiveNegative()
+    {
+
+        CalculatorModel test = new CalculatorModel();
+
+        assertEquals("+24x^11+15x^2+6x^-3+16x^-5", test.derivative(DERIVATIVE_POSITIVE_NEGATIVE));
+    }
+    @Test
+    public void testDerivativeZero()
+    {
+        CalculatorModel test = new CalculatorModel();
+
+        assertEquals("+24x^3", test.derivative(DERIVATIVE_ZERO));
+    }
+
 }

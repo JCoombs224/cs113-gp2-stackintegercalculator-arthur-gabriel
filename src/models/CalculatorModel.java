@@ -234,7 +234,7 @@ public class CalculatorModel implements CalculatorInterface {
         String newEquation = "";
         for (int i = 0; i < expression.length(); i++) {
             if ((expression.charAt(i) == '+' ||
-                    expression.charAt(i) == '-') && expression.charAt(i-1) != '^')
+                    expression.charAt(i) == '-') && expression.charAt(i-1) != '^' && i != 0)
             {
                 Term addTerm = new Term(polynomial);
                 derivativeList.offer(addTerm);
@@ -253,7 +253,7 @@ public class CalculatorModel implements CalculatorInterface {
             if (removeObject.getExponent() != 0) {
                 removeObject.setCoefficient(removeObject.getCoefficient() * removeObject.getExponent());
                 removeObject.setExponent(removeObject.getExponent() - 1);
-                newEquation += removeObject.toString() + " ";
+                newEquation += removeObject.toString();
             }
         }
         return newEquation;

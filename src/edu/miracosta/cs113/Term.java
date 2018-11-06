@@ -48,7 +48,7 @@ public class Term implements Comparable<Term>
             {
                 tempExpo = term.substring(i+1);
                 System.out.println("tempExpo = "  + tempExpo);
-                break;
+                i = term.length()-1;
             }
             //if the character checked is x, and there is no digit before the x character
             else if(term.charAt(i) == 'x' && !Character.isDigit(term.charAt(i-1)))

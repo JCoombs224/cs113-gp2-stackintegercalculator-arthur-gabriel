@@ -25,84 +25,68 @@ public class CalculatorModel implements CalculatorInterface {
     }
 
 
+    public int recursiveMethodToCalculateParenthesis(String expression)
+    {
+        String[] expressionToSplit = expression.split("");
+
+        int firstOccurrence = -1;
+        int lastOccurrence = -1;
+
+        //The index of the first parenthesis.
+        for(int i = 0; i < expressionToSplit.length; i++)
+        {
+            if(expressionToSplit[i].equals("(" ))
+            {
+                firstOccurrence = i;
+                break;
+            }
+        }
+
+        //The index of the last parenthesis.
+        for(int c = expressionToSplit.length-1; c > 0; c--)
+        {
+            if(expressionToSplit[c].equals(")"))
+            {
+                lastOccurrence = c;
+                break;
+            }
+        }
+
+        String operationBeforeParenthesis = "";
+        String operationAfterParenthesis = "";
+        //check if numbers are outside of the parenthesis.
+        //in this case look for numbers before.
+        if(firstOccurrence > 0)
+        {
+            for(int i = 0; i < firstOccurrence; i++)
+            {
+                operationBeforeParenthesis += expressionToSplit[i];
+            }
+
+        }
+
+        //check if numbers are outside of the parenthesis.
+        //in this case look for numbers after.
+        if(lastOccurrence < expressionToSplit.length-1)
+        {
+
+            for(int i = lastOccurrence+1; i < expressionToSplit.length; i++)
+            {
+                operationAfterParenthesis  += expressionToSplit[i];
+            }
+        }
+
+        //add these operations to the bottom of the stack.
+        listToProcess.add(operationBeforeParenthesis);
+        listToProcess.add(operationAfterParenthesis);
+
+    }
+
 
     @Override
     public String evaluate(String expression)
     {
-        StringTokenizer calculation = new StringTokenizer(expression, " ");
-
-        /*
-        String number1,number2 = "";
-        String operator = "";
-        String withParent = "";
-        int totalNumber = 0;
-        while(g.charAt(i) != ')')
-        {
-            withParent += g.charAt(i);
-        }
-        withParent.replaceAll(" ", "");
-        if(withParent.length() > 2)
-        {
-            for(int i = 0; i < withParent.length();i++)
-            {
-                if(Character.isDigit(withParent.charAt(i)) && operator.equals(""))
-                {
-                    number1 += withParent.charAt(i);
-                }
-                if(Character.isDigit(withParent.charAt(i)) && !operator.equals(""))
-                {
-                    number2 += withParent.charAt(i);
-                }
-                else if(!Character.isDigit(withParent.charAt(i)))
-                {
-                    if(!operator.equals(""))
-                    {
-                        if(operator.equals("+"))
-                        {
-                            totalNumber = Integer.parseInt(number1) + Integer.parseInt(number2);
-                        }
-                        else if(operator.equals("-"))
-                        {
-                            totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
-                        }
-                        else if(operator.equals("*"))
-                        {
-                            totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
-                        }
-                        else if(operator.equals("/"))
-                        {
-                            totalNumber = Integer.parseInt(number1) / Integer.parseInt(number2);
-                        }
-
-                        number1 = String.valueOf(totalNumber);
-                        number2 = "";
-                    }
-
-                    operator = "";
-                    operator += withParent.charAt(i);
-                }
-                if(i+1 == withParent.length() && !number2.equals("") && !operator.equals(""))
-                {
-                    if(operator.equals("+"))
-                    {
-                        totalNumber = Integer.parseInt(number1) + Integer.parseInt(number2);
-                    }
-                    else if(operator.equals("-"))
-                    {
-                        totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
-                    }
-                    else if(operator.equals("*"))
-                    {
-                        totalNumber = Integer.parseInt(number1) - Integer.parseInt(number2);
-                    }
-                    else if(operator.equals("/"))
-                    {
-                        totalNumber = Integer.parseInt(number1) / Integer.parseInt(number2);
-                    }
-                }
-
-            }
-        }*/
+        String[] expressionToSplit = expression.split("");
 
 
 

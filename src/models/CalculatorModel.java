@@ -1,6 +1,8 @@
 package models;
 
 
+import edu.miracosta.cs113.Term;
+
 import java.util.*;
 
 /**
@@ -9,7 +11,9 @@ import java.util.*;
  * TODO: This file given just to get code to compile (method stubbed). Make sure to implement appropriately (and remove this).
  *
  * @author Nery Chapeton-Lamas
- * @version 1.0
+ * @version 1.1
+ *
+ * @modified by Gabriel Bactol and Arthur Utnehmer (CS113)
  */
 public class CalculatorModel implements CalculatorInterface {
 
@@ -208,5 +212,85 @@ public class CalculatorModel implements CalculatorInterface {
                 break;
         }
         return result;
+    }
+
+    /**
+     * Takes a polynomial equation, finds the derivative for each polynomial within the equation.
+     *
+     * @param expression a Polynomial equation that will be used to find the derivative for
+     * @return newEquation, a String representation of the expression, evaluated after finding the derivative
+     */
+    public String calcDerivative(String expression) {
+
+        //removing any whitespace
+        expression = expression.replaceAll(" ", "");
+
+        //where the information of the polynomial equation will be stored
+        Queue<Term> derivativeList = new LinkedList<>();
+
+        //what holds a single polynomial within the expression
+        String polynomial = "";
+
+        //what will store the new polynomial
+        String newEquation = "";
+
+        //going through the whole expression
+        for (int i = 0; i < expression.length(); i++) {
+
+            //if it finds an operator, then it knows we have reached the next polynomial in the equation.
+            //the only exception to this is if the first number is negative, so it would require the negative symbol
+            //keep in mind that the exponent could be negative as well, so we do need to check whether
+            //it is after a '^' symbol
+            if ((expression.charAt(i) == '+' ||
+                    expression.charAt(i) == '-')  && i != 0 && expression.charAt(i-1) != '^')
+            {
+                //a new term is created, and stored into the queue
+                Term addTerm = new Term(polynomial);
+                derivativeList.offer(addTerm);
+
+                //resetting the String to insert the next polynomial
+                polynomial = "";
+
+                //adding the operator for the polynomial, positive or negative
+                polynomial += expression.charAt(i);
+            }
+            //if it reaches the end of the String, which is the last of the last polynomial in the string
+            else if (i + 1 == expression.length())
+            {
+                //add the operator, and add the term into the queue
+                polynomial += expression.charAt(i);
+                Term addTerm = new Term(polynomial);
+                derivativeList.offer(addTerm);
+            }
+            //if it hasn't reached the next operator or end of the string, continue to add the piece of the string
+            //since it hasn't finished adding the polynomial
+            else
+            {
+                polynomial += expression.charAt(i);
+            }
+        }
+
+        //while there is still objects in the queue
+        while (derivativeList.peek() != null) {
+
+            //remove the head of the queue, which was the first polynomial in the equation
+            Term removeObject = derivativeList.poll();
+
+            //if the exponent is 0, the number doesn't exist anymore
+            if (removeObject.getExponent() != 0) {
+
+                //the coefficient is multiplied by the exponent value
+                removeObject.setCoefficient(removeObject.getCoefficient() * removeObject.getExponent());
+
+                //the exponent is subtracted by 1
+                removeObject.setExponent(removeObject.getExponent() - 1);
+
+                //the toString of the term is added into the expression
+                newEquation += removeObject.toString();
+            }
+        }
+
+        //return the new expression, containing the polynomials with their derivatives calculated
+        return newEquation;
     }
 }

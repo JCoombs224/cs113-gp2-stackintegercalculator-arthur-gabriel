@@ -36,7 +36,9 @@ public class CalculatorView extends JPanel implements ActionListener {
     private JButton[] digitButtons;
     private JButton[] operatorButtons;
     private JButton clearButton;
-
+    private JButton exponentButton;
+    private JButton variableButton;
+    private JButton derivativeButton;
     private CalculatorInterface calc;
 
     /**
@@ -53,6 +55,12 @@ public class CalculatorView extends JPanel implements ActionListener {
         this.displayLabel = new JLabel(DISPLAY_START);
         this.clearButton = new JButton(CLEAR);
         this.clearButton.addActionListener(this);
+        this.exponentButton = new JButton("^");
+        this.exponentButton.addActionListener(this);
+        this.variableButton = new JButton("x");
+        this.variableButton.addActionListener(this);
+        this.derivativeButton = new JButton("D");
+        this.derivativeButton.addActionListener(this);
 
         // Create buttons for digits 0-9
         this.digitButtons = new JButton[10];
@@ -161,6 +169,9 @@ public class CalculatorView extends JPanel implements ActionListener {
         buttonsPanel.add(this.clearButton);
         buttonsPanel.add(this.operatorButtons[0]);
         buttonsPanel.add(this.operatorButtons[EVAL_OP]);
+        buttonsPanel.add(this.exponentButton);
+        buttonsPanel.add(this.variableButton);
+        buttonsPanel.add(this.derivativeButton);
 
         return buttonsPanel;
     }
@@ -204,10 +215,32 @@ public class CalculatorView extends JPanel implements ActionListener {
             this.setDisplay(""); // Clears display
         }
         else if (actionChar == OPERATORS[EVAL_OP]) {
-            value = calc.evaluate(this.getDisplay()); // Call CalculatorInterface method evaluate
-            // TODO: handle errors that may get thrown. Consider all possible exceptional expressions.
-            this.setDisplay("" + value); // Writes result of evaluated expression to the display
+            try
+            {
+                value = calc.evaluate(this.getDisplay()); // Call CalculatorInterface method evaluate
+                // TODO: handle errors that may get thrown. Consider all possible exceptional expressions.
+                this.setDisplay("" + value); // Writes result of evaluated expression to the display
+            }
+            catch(NullPointerException o)
+            {
+                this.setDisplay("Clear first or enter number!");
+            }
+
         }
+        else if(actionChar == 'D')
+        {
+            try
+            {
+                value = calc.calcDerivative(this.getDisplay());
+                this.setDisplay("" + value);
+            }
+            catch(NumberFormatException a)
+            {
+                this.setDisplay("Caught ya! Clear first!");
+            }
+
+        }
+        //else if(actionChar == 'D')
         else {
             // Digit or operator, so just concatenate to current display
             this.concatDisplay(actionCommand);

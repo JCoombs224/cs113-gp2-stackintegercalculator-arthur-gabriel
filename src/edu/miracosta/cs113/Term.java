@@ -47,7 +47,6 @@ public class Term implements Comparable<Term>
             if(term.charAt(i) == '^')
             {
                 tempExpo = term.substring(i+1);
-                System.out.println("tempExpo = "  + tempExpo);
                 i = term.length()-1;
             }
             //if the character checked is x, and there is no digit before the x character

@@ -16,4 +16,5 @@ public interface CalculatorInterface{
      */
     public String evaluate(String expression);
 
+    public String calcDerivative(String expression);
 }

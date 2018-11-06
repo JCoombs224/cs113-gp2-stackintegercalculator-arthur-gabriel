@@ -227,14 +227,14 @@ public class CalculatorModel implements CalculatorInterface {
         }
         return result;
     }
-    public String derivative(String expression) {
+    public String calcDerivative(String expression) {
         expression = expression.replaceAll(" ", "");
         Queue<Term> derivativeList = new LinkedList<>();
         String polynomial = "";
         String newEquation = "";
         for (int i = 0; i < expression.length(); i++) {
             if ((expression.charAt(i) == '+' ||
-                    expression.charAt(i) == '-') && expression.charAt(i-1) != '^' && i != 0)
+                    expression.charAt(i) == '-')  && i != 0 && expression.charAt(i-1) != '^')
             {
                 Term addTerm = new Term(polynomial);
                 derivativeList.offer(addTerm);

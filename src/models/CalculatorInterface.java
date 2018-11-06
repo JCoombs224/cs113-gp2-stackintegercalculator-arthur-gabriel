@@ -16,5 +16,11 @@ public interface CalculatorInterface{
      */
     public String evaluate(String expression);
 
+    /**
+     * Takes a polynomial equation, and makes finds the derivative for each polynomial.
+     *
+     * @param expression a Polynomial equation that the method calcDerivative() will find the derivative for
+     * @return a String representation of the expression, evaluated after finding the derivative
+     */
     public String calcDerivative(String expression);
 }

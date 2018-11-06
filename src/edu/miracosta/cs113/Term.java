@@ -7,7 +7,7 @@ import java.lang.Comparable;
  * Term object's exponents.
  *
  * @author Gabriel Bactol (CS113)
- * @version 1.0
+ * @version 1.1
  *
  */
 public class Term implements Comparable<Term>
@@ -50,7 +50,7 @@ public class Term implements Comparable<Term>
                 i = term.length()-1;
             }
             //if the character checked is x, and there is no digit before the x character
-            else if(term.charAt(i) == 'x' && !Character.isDigit(term.charAt(i-1)))
+            else if((term.charAt(i) == 'x' && term.length() == 1) || (term.charAt(i) == 'x' && !Character.isDigit(term.charAt(i-1))))
             {
                 //coefficient is 1
                 tempCoeff += "1";
@@ -204,6 +204,7 @@ public class Term implements Comparable<Term>
             if(coefficient > 0)
             {
                 listTerm = "+";
+
                 //if the coefficient is something other than 1, then add the whole number to the string
                 if(coefficient != 1)
                 {

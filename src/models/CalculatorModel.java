@@ -1,6 +1,8 @@
 package models;
 
 
+import edu.miracosta.cs113.Term;
+
 import java.util.*;
 
 /**
@@ -224,5 +226,36 @@ public class CalculatorModel implements CalculatorInterface {
                 break;
         }
         return result;
+    }
+    public String derivative(String expression) {
+        expression = expression.replaceAll(" ", "");
+        Queue<Term> derivativeList = new LinkedList<>();
+        String polynomial = "";
+        String newEquation = "";
+        for (int i = 0; i < expression.length(); i++) {
+            if ((expression.charAt(i) == '+' ||
+                    expression.charAt(i) == '-') && expression.charAt(i-1) != '^')
+            {
+                Term addTerm = new Term(polynomial);
+                derivativeList.offer(addTerm);
+                polynomial = "";
+                polynomial += expression.charAt(i);
+            } else if (i + 1 == expression.length()) {
+                polynomial += expression.charAt(i);
+                Term addTerm = new Term(polynomial);
+                derivativeList.offer(addTerm);
+            } else {
+                polynomial += expression.charAt(i);
+            }
+        }
+        while (derivativeList.peek() != null) {
+            Term removeObject = derivativeList.poll();
+            if (removeObject.getExponent() != 0) {
+                removeObject.setCoefficient(removeObject.getCoefficient() * removeObject.getExponent());
+                removeObject.setExponent(removeObject.getExponent() - 1);
+                newEquation += removeObject.toString() + " ";
+            }
+        }
+        return newEquation;
     }
 }

@@ -50,6 +50,9 @@ You have been given a View and Controller for a basic integer calculator, **you 
 		- *Relevant diagrams and documentation updated and accurate (UML class/sequence diagrams, etc.)*
 - [ ] Complete following statement in space below:
 >The Stack implementation we will be using is [***type which data structure you'll use in this adaptor pattern***] because [ ***type your reasoning here in 2-3 sentences, making sure to justify the way we have in class (run-time efficiency, memory-space efficiency, etc.)*** ].
+The Stack implementation we will be using is the Queue data structure because queues allow the program to check for nulls in its methods compared to a stack. Methods where issues would occur in a stack only throw
+an EmptyStackException, which would require exception handling. Another reason to use queues is that the program needs to maintain the operation order for the expression to be solved, and so we are able to store operations
+in the correct order through this way. The queue works in the situation the First in, First out, so there isn't a need to worry about the order of the queue.
 
 ## Sprint 1 (Calculator Foundation, add using PEMDAS)
 **User Story**:
@@ -71,9 +74,9 @@ You have been given a View and Controller for a basic integer calculator, **you 
 - [ ] Create JUnit tests for the above code make sure the following tests work correctly
 - [ ] Product owner agrees
 
-## Sprint 2 (???)
+## Sprint 2 (Calculator's Second Function: Derivative, and Exception checking)
 **User Story**:
->As a ***???*** I want to ***???*** so that ***???***.
+>As a ***programmer using the calculator program*** I want to ***be able to calculate the derivative of an expression correctly*** so that ***it will print out the expression's derivative***.
 
 **Definition Of Done**:
 - [ ] General requirements 
@@ -82,6 +85,12 @@ You have been given a View and Controller for a basic integer calculator, **you 
 	- *Code checked into GitHub*
 	- *Unit tests were written, all pass*
 	- *Relevant diagrams and documentation updated and accurate (UML class/sequence diagrams, etc.)*
+- [ ] Create code that would allow the following
+    - [ ] A method that would calculate each polynomial's derivative in the string using a queue
+    - [ ] A term class that would separate the coefficient and exponent
+    - [ ] Create buttons on the calculator
+    - [ ] Allow the calculator to utilize the above items to properly display the derivative
+    - [ ] Catch any exceptions that would be caused by either calculating numbers or calculating derivatives
 - [ ] Product owner agrees
 
 ----------

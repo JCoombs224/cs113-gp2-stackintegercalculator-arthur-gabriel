@@ -50,7 +50,7 @@ public class Term implements Comparable<Term>
                 i = term.length()-1;
             }
             //if the character checked is x, and there is no digit before the x character
-            else if((term.charAt(i) == 'x' && term.length() == 1) || (term.charAt(i) == 'x' && !Character.isDigit(term.charAt(i-1))))
+            else if((term.charAt(i) == 'x' && (i == 0 ||term.length() == 1 || !Character.isDigit(term.charAt(i-1))) ))
             {
                 //coefficient is 1
                 tempCoeff += "1";
@@ -68,6 +68,18 @@ public class Term implements Comparable<Term>
                     tempExpo = "1";
             }
 
+            else if(term.charAt(i) == '+' && term.length() == 1)
+            {
+                tempCoeff = "1";
+                tempExpo +="0";
+
+            }
+            else if(term.charAt(i) == '-' && term.length() == 1)
+            {
+                tempCoeff = "-1";
+                tempExpo +="0";
+            }
+
             //if it finds there is a value other than x, it would be the coefficient
             else if(term.charAt(i) != 'x')
             {
@@ -79,6 +91,7 @@ public class Term implements Comparable<Term>
                     tempExpo +="0";
                 }
             }
+
         }
 
         //set the coefficient and exponent based on what was inserted into the strings

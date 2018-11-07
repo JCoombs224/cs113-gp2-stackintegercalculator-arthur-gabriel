@@ -33,6 +33,9 @@ public class CalculatorView extends JPanel implements ActionListener {
     public static final int BUTTONS_PANEL_ROWS = 4, BUTTONS_PANEL_COLS = 5;
     /** Message displayed upon opening the calculator. */
     public static final String DISPLAY_START = "CS113 CALC ^_^";
+    public static final String DERIVATIVE = "D";
+    public static final String VARIABLE = "x";
+    public static final String EXPONENT = "^";
 
     private JLabel displayLabel;
     private JButton[] digitButtons;
@@ -62,11 +65,11 @@ public class CalculatorView extends JPanel implements ActionListener {
         this.clearButton.addActionListener(this);
 
         //initialize buttons used for derivative
-        this.exponentButton = new JButton("^");
+        this.exponentButton = new JButton(EXPONENT);
         this.exponentButton.addActionListener(this);
-        this.variableButton = new JButton("x");
+        this.variableButton = new JButton(VARIABLE);
         this.variableButton.addActionListener(this);
-        this.derivativeButton = new JButton("D");
+        this.derivativeButton = new JButton(DERIVATIVE);
         this.derivativeButton.addActionListener(this);
 
         // Create buttons for digits 0-9
@@ -231,7 +234,7 @@ public class CalculatorView extends JPanel implements ActionListener {
             //if nothing was inputted at the start of the program
             catch(NullPointerException o)
             {
-                this.setDisplay("Clear first or enter number!");
+                this.setDisplay("Caught you! Clear first, then enter number.");
             }
         }
 
@@ -246,11 +249,9 @@ public class CalculatorView extends JPanel implements ActionListener {
             //if the user tries to press the derivative button in the beginning, or if text exists in the display
             catch(NumberFormatException a)
             {
-                this.setDisplay("Caught ya! Clear first!");
+                this.setDisplay("Caught you! Clear first, then enter number.");
             }
-
         }
-        //else if(actionChar == 'D')
         else {
             // Digit or operator, so just concatenate to current display
             this.concatDisplay(actionCommand);

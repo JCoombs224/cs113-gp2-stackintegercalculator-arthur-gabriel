@@ -147,7 +147,79 @@ public class CalculatorModel implements CalculatorInterface
      */
     public String sortOrderOfOperations(String expression)
     {
-        return null;
+        Stack<Character> precedence = new Stack<Character>();
+        String postfixString = "";
+
+        expression = expression+"s";
+        expression= expression.replace("+", "s+");
+        expression= expression.replace("-", "s-");
+        expression= expression.replace("/", "s/");
+        expression= expression.replace("*", "s*");
+
+
+
+        for (int index = 0; index < expression.length(); ++index)
+        {
+            char value = expression.charAt(index);
+
+            //Add values to the precedence depending on the precedence + and - first
+            if (value == '+' || value == '-')
+            {
+                if (precedence.isEmpty())
+                {
+                    precedence.push(value);
+                } else
+                {
+                    Character operator = precedence.peek();
+                    while (!(precedence.isEmpty() || operator.equals(('(')) || operator.equals((')'))))
+                    {
+                        operator = precedence.pop(); // Code Updated
+                        postfixString += operator.charValue();
+                    }
+                    precedence.push(value);
+                }
+            }
+            //theb do * and /
+            else if (value == '*' || value == '/')
+            {
+                if (precedence.isEmpty())
+                {
+                    precedence.push(value);
+                } else
+                {
+                    Character operator = precedence.peek();
+                    // while condition updated
+                    while (!operator.equals(('+')) && !operator.equals(('-')) && !precedence.isEmpty())
+                    {
+                        operator = precedence.pop(); // Code Updated
+                        postfixString += operator.charValue();
+                    }
+                    precedence.push(value);
+                }
+            } else
+            {
+                postfixString += value;
+            }
+        }
+
+        while (!precedence.isEmpty())
+        {
+            Character oper = precedence.peek();
+            if (!oper.equals(('(')))
+            {
+                precedence.pop();
+                postfixString += oper.charValue();
+            }
+        }
+
+        postfixString = postfixString.replace("s", " ");
+        postfixString = postfixString.replace("+", "+ ");
+        postfixString = postfixString.replace("*", "* ");
+        postfixString = postfixString.replace("-", "- ");
+        postfixString = postfixString.replace("/", "/ ");
+        postfixString = postfixString.trim();
+
+        return postfixString;
     }
 
     /**
@@ -158,84 +230,65 @@ public class CalculatorModel implements CalculatorInterface
      */
     private int helperArithmetic(String expression)
     {
-        //queue of operations and stack of integers.
-        Queue<String> queueOfOperations = new LinkedList<>();
-        Queue<Integer> queueOfIntegers = new LinkedList<>();
 
         int answer = 0;
-        StringTokenizer calculation = new StringTokenizer(expression, " ");
+        //remove spaces and add to the infix to postfix algorithm.
 
-        //separate operations and numbers into queues.
-        while (calculation.hasMoreTokens())
-        {
-            String nextToken = calculation.nextToken();
-            nextToken = nextToken.trim();
-            char firstChar = nextToken.charAt(0);
+        expression = expression.replace(" ", "").trim();
+        expression = this.sortOrderOfOperations(expression);
+        System.out.println(expression);
 
-            if(Character.isDigit(firstChar))
-            {
-                queueOfIntegers.add(Integer.parseInt(nextToken));
-            }
-            else if(isOperator(firstChar))
-            {
-                queueOfOperations.add(nextToken);
-            }
-        }
+
+        //stack for operands
+        Stack<Integer>operandStack = new Stack<Integer>();
+
+        //process each token.
+        String[] tokens = expression.split("\\s");
+
         try
         {
-            //while neither are empty.
-            boolean firstNumberAdded = false;
-            boolean secondNumberAdded = false;
-
-            //add first number to the stack.
-            String nextTokenTmp = queueOfIntegers.poll().toString();
-            nextTokenTmp = nextTokenTmp.trim();
-            list.push(Integer.parseInt(nextTokenTmp));
-
-            while ((!queueOfOperations.isEmpty()) )
+            for(String nextToken: tokens)
             {
-                String nextToken = "";
-                char firstChar = '1';
-                //if we have not added a first number.
-                if(!queueOfIntegers.isEmpty())
+                char firstChar = nextToken.charAt(0);
+                //does it start with a digit?
+                if((Character.isDigit(firstChar)))
                 {
-                    nextToken = queueOfIntegers.poll().toString();
-                    nextToken = nextToken.trim();
-                    firstChar = nextToken.charAt(0);
-                    //add digit to the stack.
+                    System.out.println(nextToken);
+                    //get int value.
                     int value = Integer.parseInt(nextToken);
+                    //push value into operand stack.
                     list.push(value);
                 }
-                //lastly, poll the operations.
-                nextToken = queueOfOperations.poll();
-                nextToken = nextToken.trim();
-                firstChar = nextToken.charAt(0);
-
-                //if a command, calculate.
-                if(isOperator(firstChar))
+                //is it an operator.
+                else if(isOperator(firstChar))
                 {
+                    //evaluate.
                     int result = evalOP(firstChar);
+                    //push to stack.
                     list.push(result);
                 }
                 else
                 {
-                    throw new SyntaxErrorException("Please enter an allowable character");
+                    throw new SyntaxErrorException("Invalid syntax " + firstChar);
                 }
             }
 
+            //no more tokens.
             answer = list.pop();
-            if(list.empty())
+
+            if(operandStack.isEmpty())
             {
                 return answer;
             }
             else
             {
-                throw new SyntaxErrorException("Stack is not empty, did not process all characters");
+                throw new SyntaxErrorException("stack is not empty");
             }
         }
+
         catch(EmptyStackException e)
         {
-            System.out.println("Stack is empty");
+            return answer;
         }
         catch (SyntaxErrorException e)
         {

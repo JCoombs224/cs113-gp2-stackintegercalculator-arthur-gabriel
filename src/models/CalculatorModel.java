@@ -32,7 +32,7 @@ public class CalculatorModel implements CalculatorInterface
 
 
     /**
-     * Takes a string formated with parenthesis and then returns a number relative to the operations within thee operations in the string.
+     * Takes a string formatted with parenthesis and then returns a number relative to the operations within the operations in the string.
      *
      * @param expression an arithmetic equation.
      * @return answer The solution to the equation.

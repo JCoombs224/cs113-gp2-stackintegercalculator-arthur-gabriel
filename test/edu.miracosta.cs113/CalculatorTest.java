@@ -29,7 +29,7 @@ public class CalculatorTest
 
     //used to test the evaluate method in the CalculatorModel class, having more than one operations
     private static final String MIXED_EQUATION1 = "3 * 4(6 + 2) - 8 / 2";
-    private static final String MIXED_EQUATION2 = "4 / 2 + 6 * 10/(2+3)";
+    private static final String MIXED_EQUATION2 = "4 / 2 + 6 * 10 / (2 + 3)";
     private static final String MIXED_EQUATION3 = "5 + 3( 4( 5 - 3 ) ) - 8 + 2";
 
 

@@ -93,6 +93,9 @@ in the correct order through this way. The queue works in the situation the Firs
     - [ ] Catch any exceptions that would be caused by either calculating numbers or calculating derivatives
 - [ ] Product owner agrees
 
+### Stack Integer Calculator - Final UML Diagram
+![Final UML Diagram](doc/UML_newClassDiagram_.png)
+
 ----------
 ### Make sure to commit + push *before* the deadline to have your code be considered for grading.
 >Pro-Tips:

@@ -20,7 +20,6 @@ public class CalculatorModel implements CalculatorInterface
 {
 
     public Stack<Integer> list = new Stack<Integer>();
-    public Stack<String> thingsToCalculate = new Stack<String>();
     private static final String OPERATORS = "+-*/";
 
     public static class SyntaxErrorException extends Exception
@@ -32,6 +31,12 @@ public class CalculatorModel implements CalculatorInterface
     }
 
 
+    /**
+     * Takes a string formated with parenthesis and then returns a number relative to the operations within thee operations in the string.
+     *
+     * @param expression an arithmetic equation.
+     * @return answer The solution to the equation.
+     */
     public int recursiveMethodToCalculateParenthesis(String expression)
     {
         String[] expressionToSplit = expression.split("");
@@ -118,9 +123,26 @@ public class CalculatorModel implements CalculatorInterface
         return OPERATORS.indexOf(c) != -1;
     }
 
+    /**
+     * Takes a string (with and equation)and then returns an equation according to PEMDAS.
+     *
+     * @param expression an arithmetic equation.
+     * @return answer The solution to the equation in arithmetic order.
+     */
+    public String sortOrderOfOperations(String expression)
+    {
+        return null;
+    }
+
+    /**
+     * Takes a string and then returns a number relative to the operations within the operations in the string.
+     *
+     * @param expression an arithmetic equation.
+     * @return answer The solution to the equation.
+     */
     private int helperArithmetic(String expression)
     {
-        //stack of operations and stack of integers.
+        //queue of operations and stack of integers.
         Queue<String> queueOfOperations = new LinkedList<>();
         Queue<Integer> queueOfIntegers = new LinkedList<>();
 

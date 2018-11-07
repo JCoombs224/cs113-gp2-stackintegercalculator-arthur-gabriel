@@ -3,6 +3,7 @@ package models;
 
 import edu.miracosta.cs113.Term;
 
+import java.io.BufferedReader;
 import java.util.*;
 
 /**
@@ -15,9 +16,11 @@ import java.util.*;
  *
  * @modified by Gabriel Bactol and Arthur Utnehmer (CS113)
  */
-public class CalculatorModel implements CalculatorInterface {
+public class CalculatorModel implements CalculatorInterface
+{
 
     public Stack<Integer> list = new Stack<Integer>();
+    public Stack<String> thingsToCalculate = new Stack<String>();
     private static final String OPERATORS = "+-*/";
 
     public static class SyntaxErrorException extends Exception
@@ -35,54 +38,70 @@ public class CalculatorModel implements CalculatorInterface {
 
         int firstOccurrence = -1;
         int lastOccurrence = -1;
+        String answer = "";
+        String operationBeforeParenthesis = "";
+        String operationAfterParenthesis = "";
+        String operationInsideParenthesis = "";
+        Boolean containsAParenthesis = false;
 
+        if(expression.equals(""))
+        {
+            return 0;
+        }
         //The index of the first parenthesis.
         for(int i = 0; i < expressionToSplit.length; i++)
         {
             if(expressionToSplit[i].equals("(" ))
             {
+                containsAParenthesis = true;
                 firstOccurrence = i;
                 break;
             }
         }
 
-        //The index of the last parenthesis.
-        for(int c = expressionToSplit.length-1; c > 0; c--)
+        //if the item has a parenthesis find the location of the parenthesis and remove the info surrounding the parenthesis.
+        if(containsAParenthesis)
         {
-            if(expressionToSplit[c].equals(")"))
-            {
-                lastOccurrence = c;
-                break;
-            }
-        }
-
-        String operationBeforeParenthesis = "";
-        String operationAfterParenthesis = "";
-        //check if numbers are outside of the parenthesis.
-        //in this case look for numbers before.
-        if(firstOccurrence > 0)
-        {
-            for(int i = 0; i < firstOccurrence; i++)
-            {
-                operationBeforeParenthesis += expressionToSplit[i];
+            //The index of the last parenthesis.
+            for (int c = expressionToSplit.length - 1; c > 0; c--) {
+                if (expressionToSplit[c].equals(")")) {
+                    lastOccurrence = c;
+                    break;
+                }
             }
 
-        }
+            //check if numbers are outside of the parenthesis.
+            //in this case look for numbers before.
+            if (firstOccurrence > 0) {
+                for (int i = 0; i < firstOccurrence; i++) {
+                    operationBeforeParenthesis += expressionToSplit[i];
+                }
 
-        //check if numbers are outside of the parenthesis.
-        //in this case look for numbers after.
-        if(lastOccurrence < expressionToSplit.length-1)
-        {
-
-            for(int i = lastOccurrence+1; i < expressionToSplit.length; i++)
-            {
-                operationAfterParenthesis  += expressionToSplit[i];
             }
+
+            //check if numbers are outside of the parenthesis.
+            //in this case look for numbers after.
+            if (lastOccurrence < expressionToSplit.length - 1)
+            {
+                for (int i = lastOccurrence + 1; i < expressionToSplit.length; i++)
+                {
+                    operationAfterParenthesis += expressionToSplit[i];
+                }
+            }
+            //save what is inside the parenthesis.
+            for(int i = firstOccurrence+1; i< lastOccurrence; i++)
+            {
+                operationInsideParenthesis += expressionToSplit[i];
+            }
+
+        }
+        //if out of the parenthatis, then return the expression.
+        else if(!containsAParenthesis)
+        {
+            return helperArithmetic(expression);
         }
 
-        //add these operations to the bottom of the stack.
-        listToProcess.add(operationBeforeParenthesis);
-        listToProcess.add(operationAfterParenthesis);
+        return helperArithmetic(operationBeforeParenthesis + recursiveMethodToCalculateParenthesis(operationInsideParenthesis) + operationAfterParenthesis);
 
     }
 
@@ -90,16 +109,9 @@ public class CalculatorModel implements CalculatorInterface {
     @Override
     public String evaluate(String expression)
     {
-        String[] expressionToSplit = expression.split("");
-
-
-
-
-
-        //Proof of concept.
-        int answer = helperArithmetic(expression);
-
-        return String.valueOf(answer);
+        //evaluate using a recursive method.
+        int answer = recursiveMethodToCalculateParenthesis(expression);
+        return  Integer.toString(answer);
     }
     public boolean isOperator(char c)
     {

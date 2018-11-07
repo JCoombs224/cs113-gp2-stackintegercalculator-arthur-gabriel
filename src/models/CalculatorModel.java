@@ -18,10 +18,13 @@ import java.util.*;
  */
 public class CalculatorModel implements CalculatorInterface
 {
-
+    //Initialize variables
     public Stack<Integer> list = new Stack<Integer>();
     private static final String OPERATORS = "+-*/";
 
+    /**
+     * An exception class that would handle thrown exceptions when the syntax of the expression is incorrect
+     */
     public static class SyntaxErrorException extends Exception
     {
         SyntaxErrorException(String message)
@@ -110,7 +113,12 @@ public class CalculatorModel implements CalculatorInterface
 
     }
 
-
+    /**
+     * Evaluates any values with parentheses within the expression
+     *
+     * @param expression unevaluated mathematical expression containing +, -, *, / and paren (all integer based)
+     * @return a String representation of the equation, with the parentheses removed
+     */
     @Override
     public String evaluate(String expression)
     {
@@ -228,6 +236,13 @@ public class CalculatorModel implements CalculatorInterface
 
         return answer;
     }
+
+    /**
+     * Takes a string and then returns a number after solving the equation within the operations in the string.
+     *
+     * @param op the operator that would be used for the two numbers.
+     * @return result, The solution to the between the two numbers.
+     */
     private int evalOP(char op)
     {
         int rhs = list.pop();
@@ -287,6 +302,7 @@ public class CalculatorModel implements CalculatorInterface
 
                 //adding the operator for the polynomial, positive or negative
                 polynomial += expression.charAt(i);
+
             }
             //if it reaches the end of the String, which is the last of the last polynomial in the string
             else if (i + 1 == expression.length())

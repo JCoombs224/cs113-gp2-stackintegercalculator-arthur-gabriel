@@ -4,7 +4,9 @@ package models;
  * CalculatorInterface.java : Interface for calculator model (back-end)
  *
  * @author Nery Chapeton-Lamas
- * @version 1.0
+ * @version 1.1
+ *
+ * @Modified: Gabriel Bactol and Arthur Utnehmer (CS113)
  */
 public interface CalculatorInterface{
 

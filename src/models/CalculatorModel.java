@@ -19,9 +19,17 @@ import java.util.*;
 public class CalculatorModel implements CalculatorInterface
 {
     //Initialize variables
-    public Stack<Integer> list = new Stack<Integer>();
+    private Stack<Integer> list;
     private static final String OPERATORS = "+-*/";
 
+    public CalculatorModel()
+    {
+        list = new Stack<Integer>();
+    }
+    public CalculatorModel(Stack<Integer> list)
+    {
+        this.list = list;
+    }
     /**
      * An exception class that would handle thrown exceptions when the syntax of the expression is incorrect
      */
@@ -343,4 +351,76 @@ public class CalculatorModel implements CalculatorInterface
         //return the new expression, containing the polynomials with their derivatives calculated
         return newEquation;
     }
+
+    /**
+     * Mutator for list stack variable
+     *
+     * @param list
+     *            Stack variable representing the list stack
+     */
+    public void setList(Stack<Integer> list)
+    {
+        this.list = list;
+    }
+
+    /**
+     * Accessor to get the stack from the list variable
+     *
+     * @return the stack assigned to the variable list
+     */
+    public Stack<Integer> getList()
+    {
+        return list;
+    }
+
+    /**
+     * Accessor to get the OPERATORS string
+     *
+     * @return the string within the OPERATORS variable
+     */
+    public String getOperators()
+    {
+        return OPERATORS;
+    }
+
+    /**
+     * Equals method checks ALL instance variables are equal between two CalculatorModel objects
+     */
+    public boolean equals(Object obj)
+    {
+        //checking whether the object compared to are even CalculatorModels
+        if(obj instanceof CalculatorModel)
+        {
+            //checking the instance variables
+            if(this.getList().equals(((CalculatorModel)obj).getList()) &&
+                this.getOperators().equals(((CalculatorModel)obj).getOperators()))
+            {
+                return true;
+            }
+        }
+        //by default, it is false
+        return false;
+    }
+
+    /**
+     * toString representing this CalculatorModels values
+     *
+     * @return formatted string of what was within the stack
+     */
+    public String toString()
+    {
+        ArrayList<Integer> temp = new ArrayList<>();
+        String info = "From the inside of the stack: \r\n";
+        while(!list.empty())
+        {
+            temp.add(list.pop());
+        }
+        for(int i = 0; i <temp.size();i++)
+        {
+            info += temp.get(temp.size() -1 - i) + " ";
+            list.push(temp.get(temp.size() - 1 - i));
+        }
+        return info;
+    }
+
 }

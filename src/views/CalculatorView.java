@@ -231,10 +231,14 @@ public class CalculatorView extends JPanel implements ActionListener {
                 // TODO: handle errors that may get thrown. Consider all possible exceptional expressions.
                 this.setDisplay("" + value); // Writes result of evaluated expression to the display
             }
-            //if nothing was inputted at the start of the program
+            //if nothing was inputted at the start of the program, or there was only an operation placed in the display
             catch(NullPointerException o)
             {
                 this.setDisplay("Caught you! Clear first, then enter number.");
+            }
+            catch(ArithmeticException g)
+            {
+                this.setDisplay("Don't divide by zero. Clear, and try again.");
             }
         }
 

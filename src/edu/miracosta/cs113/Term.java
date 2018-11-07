@@ -6,7 +6,7 @@ import java.lang.Comparable;
  * a compareTo method that would compare the values of two
  * Term object's exponents.
  *
- * @author Gabriel Bactol (CS113)
+ * @author Gabriel Bactol and Arthur Utnehmur(CS113)
  * @version 1.1
  *
  */
@@ -282,7 +282,7 @@ public class Term implements Comparable<Term>
     }
 
     /**
-     * Copy constructor, deep copies Term object
+     * Copy constructor, shallow copies a Term object
      *
      * @param original
      *            used to get all Term parts and deep copy

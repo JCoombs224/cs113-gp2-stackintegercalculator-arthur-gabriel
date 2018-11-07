@@ -28,9 +28,8 @@ public class CalculatorTest
     private static final String BIG_DIVISION = "81 / 9";
 
     //used to test the evaluate method in the CalculatorModel class, having more than one operations
-    private static final String MIXED_EQUATION1 = "3 * 4(6 + 2) - 8 / 2";
-    private static final String MIXED_EQUATION2 = "4 / 2 + 6 * 10 / (2 + 3)";
-    private static final String MIXED_EQUATION3 = "5 + 3( 4( 5 - 3 ) ) - 8 + 2";
+    private static final String MIXED_EQUATION1 = "3 * 4 * (6 + 2) - 8 / 2";
+    private static final String MIXED_EQUATION3 = "5 + 3 * (4 * ( 5 - 3 )) - 8 + 2";
 
 
     //tests the additional feature of the program, being the derivative
@@ -130,16 +129,7 @@ public class CalculatorTest
 
         assertEquals("92", test.evaluate(MIXED_EQUATION1));
     }
-    /**
-     * Test calculating another equation with various operations within it
-     */
-    @Test
-    public void testMixedOperations2()
-    {
-        CalculatorModel test = new CalculatorModel();
 
-        assertEquals("14", test.evaluate(MIXED_EQUATION2));
-    }
     /**
      * Test calculating an equation with various operations within it, this time parentheses within parentheses
      */
